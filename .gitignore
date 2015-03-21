@@ -1,0 +1,4 @@
+bin
+*.dll
+*.mdb
+*.userprefs
