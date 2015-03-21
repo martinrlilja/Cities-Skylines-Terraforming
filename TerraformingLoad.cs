@@ -14,7 +14,8 @@ namespace Terraforming {
 			
 			UITabstrip tabstrip = (UITabstrip)ToolsModifierControl.mainToolbar.component;
 			UITabstrip beautificationTabstrip = this.BeautificationTabstrip (tabstrip);
-			if (beautificationTabstrip != null) {
+
+			if (beautificationTabstrip != null && !this.IsCreated (beautificationTabstrip)) {
 				this.AddButton (beautificationTabstrip, true);
 			}
 		}
@@ -36,7 +37,7 @@ namespace Terraforming {
 		}
 
 		private bool IsCreated (UITabstrip strip) {
-			UIButton button = this.FindButton (strip, "Terrain");
+			UIButton button = this.FindButton (strip, "TerrainDefault");
 			return button != null;
 		}
 
