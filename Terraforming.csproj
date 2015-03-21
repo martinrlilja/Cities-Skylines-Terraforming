@@ -53,7 +53,7 @@
     <Compile Include="TerraformingPanel.cs" />
     <Compile Include="AtlasCreator.cs" />
     <Compile Include="TerraformingLoad.cs" />
-    <Compile Include="TerraformingTool.cs" />
+    <Compile Include="Tools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

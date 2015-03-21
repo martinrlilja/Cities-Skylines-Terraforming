@@ -1,7 +1,7 @@
 using System;
 
 namespace Terraforming {
-	public static class TerraformingTool {
+	public static class Tools {
 		public static TerrainTool GetTerrainTool () {
 			TerrainTool tool = ToolsModifierControl.toolController.gameObject.GetComponent<TerrainTool> ();
 			if (tool != null) {

@@ -19,21 +19,22 @@ namespace Terraforming {
 		public override void RefreshPanel () {
 			base.RefreshPanel ();
 			for (int i = 0; i < TerraformingPanel.kTools.Length; i++) {
-				this.SpawnEntry (TerraformingPanel.kTools [i].enumName, i);
+				this.SpawnEntry ("Terrain", TerraformingPanel.kTools [i].enumName, i);
 			}
+			this.SpawnEntry ("Water", "PlaceWater", TerraformingPanel.kTools.Length);
 		}
 
-		private UIButton SpawnEntry (string name, int index) {
+		private UIButton SpawnEntry (string type, string name, int index) {
 			string tooltip = TooltipHelper.Format (new string[] {
 				"title",
-				Locale.Get ("TERRAIN_TITLE", name),
+				Locale.Get (type.ToUpper () + "_TITLE", name),
 				"sprite",
 				name,
 				"text",
-				Locale.Get ("TERRAIN_DESC", name)
+				Locale.Get (type.ToUpper () + "_DESC", name)
 			});
 
-			string baseIconName = "Terrain" + name;
+			string baseIconName = type + name;
 			UITextureAtlas atlas = AtlasCreator.CreateAtlas (new string[] {
 				baseIconName,
 				baseIconName + "Focused",
@@ -48,7 +49,7 @@ namespace Terraforming {
 		protected override void OnButtonClicked (UIComponent comp) {
 			int zOrder = comp.zOrder;
 
-			TerrainTool tool = TerraformingTool.GetTerrainTool ();
+			TerrainTool tool = Tools.GetTerrainTool ();
 			tool.m_mode = kTools [zOrder].enumValue;
 
 			ToolsModifierControl.toolController.CurrentTool = tool;
