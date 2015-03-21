@@ -35,7 +35,7 @@ namespace Terraforming {
 			});
 
 			string baseIconName = type + name;
-			UITextureAtlas atlas = AtlasCreator.CreateAtlas (new string[] {
+			UITextureAtlas atlas = ResourceUtils.CreateAtlas (new string[] {
 				baseIconName,
 				baseIconName + "Focused",
 				baseIconName + "Hovered",
@@ -49,10 +49,17 @@ namespace Terraforming {
 		protected override void OnButtonClicked (UIComponent comp) {
 			int zOrder = comp.zOrder;
 
-			TerrainTool tool = Tools.GetTerrainTool ();
-			tool.m_mode = kTools [zOrder].enumValue;
+			if (zOrder == kTools.Length) {
+				WaterTool tool = Tools.GetWaterTool ();
+				tool.m_mode = WaterTool.Mode.WaterSource;
 
-			ToolsModifierControl.toolController.CurrentTool = tool;
+				ToolsModifierControl.toolController.CurrentTool = tool;
+			} else {
+				TerrainTool tool = Tools.GetTerrainTool ();
+				tool.m_mode = kTools [zOrder].enumValue;
+
+				ToolsModifierControl.toolController.CurrentTool = tool;
+			}
 		}
 		
 		protected override void Start () {

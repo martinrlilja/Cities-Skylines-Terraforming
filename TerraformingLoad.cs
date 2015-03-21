@@ -11,6 +11,8 @@ namespace Terraforming {
 	public class TerraformingLoad : LoadingExtensionBase {
 		public override void OnLevelLoaded (LoadMode mode) {
 			base.OnLevelLoaded (mode);
+
+			Tools.LoadTools ();
 			
 			UITabstrip tabstrip = (UITabstrip)ToolsModifierControl.mainToolbar.component;
 			UITabstrip beautificationTabstrip = this.BeautificationTabstrip (tabstrip);
@@ -44,7 +46,6 @@ namespace Terraforming {
 		private UITabstrip BeautificationTabstrip (UITabstrip s) {
 			UIButton button = this.FindButton (s, "Beautification");
 			if (button == null) {
-				DebugOutputPanel.AddMessage (PluginManager.MessageType.Error, "Could not find button.");
 				return null;
 			}
 
@@ -52,13 +53,11 @@ namespace Terraforming {
 			GeneratedGroupPanel groupPanel = (GeneratedGroupPanel)s.GetComponentInContainer (button, groupPanelType);
 
 			if (groupPanel == null) {
-				DebugOutputPanel.AddMessage (PluginManager.MessageType.Error, "Could not find groupPanel.");
 				return null;
 			}
 
 			UITabstrip strip = groupPanel.Find<UITabstrip> ("GroupToolstrip");
 			if (strip == null) {
-				DebugOutputPanel.AddMessage (PluginManager.MessageType.Error, "Could not find UITabstrip.");
 				return null;
 			}
 			return strip;
@@ -97,7 +96,7 @@ namespace Terraforming {
 		}
 
 		private void SetButtonSprites (UIButton button, string backgroundSpriteBase, string foregroundSpriteBase, string normalBgPostfix, string normalFgPostfix) {
-			button.atlas = AtlasCreator.CreateAtlas (new string[] {
+			button.atlas = ResourceUtils.CreateAtlas (new string[] {
 				backgroundSpriteBase + normalBgPostfix,
 				backgroundSpriteBase + "Focused",
 				backgroundSpriteBase + "Hovered",
