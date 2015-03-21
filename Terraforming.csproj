@@ -50,10 +50,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerraforminMod.cs" />
     <Compile Include="TerraformingMain.cs" />
-    <Compile Include="TerraformingGroupPanel.cs" />
     <Compile Include="TerraformingPanel.cs" />
     <Compile Include="AtlasCreator.cs" />
     <Compile Include="TerraformingLoad.cs" />
+    <Compile Include="TerraformingTool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

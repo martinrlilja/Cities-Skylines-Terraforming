@@ -13,10 +13,6 @@ namespace Terraforming {
 			base.OnLevelLoaded (mode);
 			
 			UITabstrip tabstrip = (UITabstrip)ToolsModifierControl.mainToolbar.component;
-			/*if (!this.IsCreated (tabstrip)) {
-				this.SpawnSubEntry (tabstrip, "Terrain", "MAPEDITOR_TOOL", null, "ToolbarIcon", true);
-			}*/
-
 			UITabstrip beautificationTabstrip = this.BeautificationTabstrip (tabstrip);
 			if (beautificationTabstrip != null) {
 				this.AddButton (beautificationTabstrip, true);
@@ -124,31 +120,6 @@ namespace Terraforming {
 			button.hoveredFgSprite  = foregroundSpriteBase + "Hovered";
 			button.pressedFgSprite  = foregroundSpriteBase + "Pressed";
 			button.disabledFgSprite = foregroundSpriteBase + "Disabled";
-		}
-
-		private UIButton SpawnSubEntry (UITabstrip strip, string name, string localeID, string unlockText, string spriteBase, bool enabled) {
-			Type type = typeof (TerraformingGroupPanel);
-
-			GameObject mainToolBarButtonTemplate = UITemplateManager.GetAsGameObject ("MainToolbarButtonTemplate");
-			GameObject scrollableSubPanelTemplate = UITemplateManager.GetAsGameObject ("ScrollableSubPanelTemplate");
-
-			UIButton button = (UIButton)strip.AddTab (name, mainToolBarButtonTemplate, scrollableSubPanelTemplate, type);
-			button.isEnabled = enabled;
-
-			GeneratedGroupPanel generatedGroupPanel = (GeneratedGroupPanel)strip.GetComponentInContainer (button, type);
-			if (generatedGroupPanel != null) {
-				generatedGroupPanel.component.isInteractive = true;
-				generatedGroupPanel.m_OptionsBar = ToolsModifierControl.mainToolbar.m_OptionsBar;
-				generatedGroupPanel.m_DefaultInfoTooltipAtlas = ToolsModifierControl.mainToolbar.m_DefaultInfoTooltipAtlas;
-
-				if (enabled) {
-					generatedGroupPanel.RefreshPanel ();
-				}
-			}
-
-			this.SetButtonSprites (button, spriteBase + name, spriteBase + "Base", "Normal");
-			button.tooltip = "Terraforming";
-			return button;
 		}
 	}
 }

@@ -48,23 +48,10 @@ namespace Terraforming {
 		protected override void OnButtonClicked (UIComponent comp) {
 			int zOrder = comp.zOrder;
 
-			TerrainTool tool = this.GetTerrainTool ();
+			TerrainTool tool = TerraformingTool.GetTerrainTool ();
 			tool.m_mode = kTools [zOrder].enumValue;
 
 			ToolsModifierControl.toolController.CurrentTool = tool;
-		}
-
-		private TerrainTool GetTerrainTool () {
-			TerrainTool tool = ToolsModifierControl.toolController.gameObject.GetComponent<TerrainTool> ();
-			if (tool != null) {
-				return tool;
-			}
-
-			tool = ToolsModifierControl.toolController.gameObject.AddComponent<TerrainTool> ();
-			tool.m_brushSize = 100f;
-			tool.m_strength = 0.01f;
-			tool.m_brush = ToolsModifierControl.toolController.m_brushes [0];
-			return tool;
 		}
 		
 		protected override void Start () {
