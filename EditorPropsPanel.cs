@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Terraforming {
 	public class EditorPropsPanel : GeneratedScrollPanel {
-		public string m_editorCategory;
+		public string[] m_editorCategories;
 
 		public override ItemClass.Service service {
 			get {
@@ -33,14 +33,13 @@ namespace Terraforming {
 			base.RefreshPanel ();
 
 			List<PrefabInfo> list = new List<PrefabInfo> ();
-			DebugOutputPanel.AddMessage (ColossalFramework.Plugins.PluginManager.MessageType.Message, this.m_editorCategory);
 			foreach (PrefabInfo info in Resources.FindObjectsOfTypeAll<PrefabInfo> ()) {
-				if (info.editorCategory == this.m_editorCategory) {
+				if (Array.Exists (this.m_editorCategories, c => c == info.editorCategory)) {
 					list.Add (info);
 					DebugOutputPanel.AddMessage (ColossalFramework.Plugins.PluginManager.MessageType.Message, info.name);
 				}
 			}
-			list.Sort (new Comparison<PrefabInfo> (base.ItemsGenericSort));
+			list.Sort (new Comparison<PrefabInfo> (this.ItemsGenericCategorySort));
 
 			foreach (PrefabInfo info in list) {
 				this.CreateAssetItem (info);
@@ -52,6 +51,16 @@ namespace Terraforming {
 			int hashCode = TooltipHelper.GetHashCode (localizedTooltip);
 			UIComponent tooltipBox = GeneratedPanel.GetTooltipBox (hashCode);
 			this.SpawnEntry (info.name, localizedTooltip, info.m_Thumbnail, info.m_Atlas, tooltipBox, ToolsModifierControl.IsUnlocked (info.GetUnlockMilestone ())).objectUserData = info;
+		}
+
+		protected int ItemsGenericCategorySort (PrefabInfo a, PrefabInfo b) {
+			if (a.editorCategory == b.editorCategory) {
+				return a.m_UIPriority.CompareTo (b.m_UIPriority);
+			} else {
+				int aID = Array.FindIndex (this.m_editorCategories, c => c == a.editorCategory);
+				int bID = Array.FindIndex (this.m_editorCategories, c => c == b.editorCategory);
+				return aID - bID;
+			}
 		}
 	}
 }

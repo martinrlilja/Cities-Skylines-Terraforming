@@ -18,37 +18,75 @@ namespace Terraforming {
 			UITabstrip beautificationTabstrip = this.BeautificationTabstrip (tabstrip);
 
 			if (beautificationTabstrip != null && !this.IsCreated (beautificationTabstrip)) {
-				this.AddPropsPanel (beautificationTabstrip, new EditorProps[] {
-					new EditorProps ("PropsIndustrialContainers", "Containers"),
-					new EditorProps ("PropsIndustrialConstructionMaterials", "Construction Materials"),
-					new EditorProps ("PropsIndustrialStructures", "Structures"),
+				this.AddPropsPanels (beautificationTabstrip, new EditorProps[] {
+					new EditorProps ("PropsBillboards", new string[] {
+						"PropsBillboardsLogo",
+						"PropsBillboardsSmallBillboard",
+						"PropsBillboardsMediumBillboard",
+						"PropsBillboardsLargeBillboard",
+					}, "ToolbarIconPropsBillboards", "Billboards"),
 
-					new EditorProps ("PropsParksPlaygrounds", "Playgrounds"),
-					new EditorProps ("PropsParksFlowersAndPlants", "Flowers and Plants"),
-					new EditorProps ("PropsParksParkEquipment", "Park Equipment"),
-					new EditorProps ("PropsParksFountains", "Fountains"),
+					new EditorProps ("PropsSpecialBillboards", new string[] {
+						"PropsBillboardsRandomLogo",
+						"PropsSpecialBillboardsRandomSmallBillboard",
+						"PropsSpecialBillboardsRandomMediumBillboard",
+						"PropsSpecialBillboardsRandomLargeBillboard",
+						"PropsSpecialBillboards3DBillboard",
+						"PropsSpecialBillboardsAnimatedBillboard",
+					}, "ToolbarIconPropsSpecialBillboards", "Special Billboards"),
+
+					new EditorProps ("PropsIndustrial", new string[] {
+						"PropsIndustrialContainers",
+						"PropsIndustrialConstructionMaterials",
+						"PropsIndustrialStructures",
+					}, "ToolbarIconPropsIndustrial", "Industrial"),
+
+					new EditorProps ("PropsParks", new string[] {
+						"PropsParksPlaygrounds",
+						"PropsParksFlowersAndPlants",
+						"PropsParksParkEquipment",
+						"PropsParksFountains",
+					}, "ToolbarIconPropsParks", "Parks"),
+
+					new EditorProps ("PropsCommon", new string[] {
+						"PropsCommonAccessories",
+						"PropsCommonGarbage",
+						"PropsCommonCommunications",
+						"PropsCommonStreets",
+					}, "ToolbarIconPropsCommon", "Common"),
+
+					new EditorProps ("PropsResidential", new string[] {
+						"PropsResidentialHomeYard",
+						"PropsResidentialGroundTiles",
+						"PropsResidentialRooftopAccess",
+						"PropsResidentialRandomRooftopAccess",
+					}, "ToolbarIconPropsResidential", "Residential"),
 				});
 
-				UIButton button = this.AddButton (typeof (TerraformingPanel), beautificationTabstrip, "Terraforming", "TerrainDefault", true);
+				UIButton button = this.AddButton (typeof (TerraformingPanel), beautificationTabstrip, "TerrainDefault", "Terraforming", true);
 				this.SetButtonSprites (button, "ToolbarIconTerrain", "SubBarButtonBase");
 			}
 			// CreateGroupItem (new GeneratedGroupPanel.GroupInfo ("PropsParksParkEquipment", this.GetCategoryOrder (base.name), "Props"), "PROPS_CATEGORY");
 		}
 
 		private struct EditorProps {
-			public string m_category;
-			public string m_tooltip;
+			public string   m_category;
+			public string[] m_categories;
+			public string   m_icon;
+			public string   m_tooltip;
 
-			public EditorProps (string category, string tooltip) {
-				this.m_category = category;
-				this.m_tooltip  = tooltip;
+			public EditorProps (string category, string[] categories, string icon, string tooltip) {
+				this.m_category   = category;
+				this.m_categories = categories;
+				this.m_icon       = icon;
+				this.m_tooltip    = tooltip;
 			}
 		}
 
-		private void AddPropsPanel (UITabstrip tabstrip, EditorProps[] props) {
+		private void AddPropsPanels (UITabstrip tabstrip, EditorProps[] props) {
 			foreach (EditorProps prop in props) {
-				UIButton button = this.AddButton (typeof (EditorPropsPanel), tabstrip, prop.m_category, prop.m_tooltip, true);
-				this.SetButtonSprites (button, "SubBar" + prop.m_category, "SubBarButtonBase");
+				UIButton button = this.AddButton (typeof (EditorPropsPanel), tabstrip, prop.m_category, prop.m_categories, prop.m_tooltip, true);
+				this.SetButtonSprites (button, prop.m_icon, "SubBarButtonBase");
 			}
 		}
 
@@ -94,6 +132,10 @@ namespace Terraforming {
 		}
 
 		private UIButton AddButton (Type type, UITabstrip strip, string category, string tooltip, bool enabled) {
+			return this.AddButton (type, strip, category, null, tooltip, enabled);
+		}
+
+		private UIButton AddButton (Type type, UITabstrip strip, string category, string[] editorCategories, string tooltip, bool enabled) {
 			GameObject subbarButtonTemplate = UITemplateManager.GetAsGameObject ("SubbarButtonTemplate");
 			GameObject subbarPanelTemplate = UITemplateManager.GetAsGameObject ("SubbarPanelTemplate");
 			UIButton button = (UIButton)strip.AddTab (category, subbarButtonTemplate, subbarPanelTemplate, type);
@@ -106,7 +148,7 @@ namespace Terraforming {
 				generatedScrollPanel.m_DefaultInfoTooltipAtlas = ToolsModifierControl.mainToolbar.m_DefaultInfoTooltipAtlas;
 
 				if (generatedScrollPanel is EditorPropsPanel) {
-					((EditorPropsPanel)generatedScrollPanel).m_editorCategory = category;
+					((EditorPropsPanel)generatedScrollPanel).m_editorCategories = editorCategories;
 				}
 
 				if (enabled) {
