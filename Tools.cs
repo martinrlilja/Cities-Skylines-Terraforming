@@ -24,7 +24,7 @@ namespace Terraforming {
 
 			tool = ToolsModifierControl.toolController.gameObject.AddComponent<WaterToolLoad> ();
 			tool.Load ();
-			tool.m_capacity = 0.1f;
+			tool.m_capacity = 0.01f;
 			return tool;
 		}
 

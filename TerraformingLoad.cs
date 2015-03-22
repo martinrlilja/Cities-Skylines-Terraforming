@@ -18,7 +18,37 @@ namespace Terraforming {
 			UITabstrip beautificationTabstrip = this.BeautificationTabstrip (tabstrip);
 
 			if (beautificationTabstrip != null && !this.IsCreated (beautificationTabstrip)) {
-				this.AddButton (beautificationTabstrip, true);
+				this.AddPropsPanel (beautificationTabstrip, new EditorProps[] {
+					new EditorProps ("PropsIndustrialContainers", "Containers"),
+					new EditorProps ("PropsIndustrialConstructionMaterials", "Construction Materials"),
+					new EditorProps ("PropsIndustrialStructures", "Structures"),
+
+					new EditorProps ("PropsParksPlaygrounds", "Playgrounds"),
+					new EditorProps ("PropsParksFlowersAndPlants", "Flowers and Plants"),
+					new EditorProps ("PropsParksParkEquipment", "Park Equipment"),
+					new EditorProps ("PropsParksFountains", "Fountains"),
+				});
+
+				UIButton button = this.AddButton (typeof (TerraformingPanel), beautificationTabstrip, "Terraforming", "TerrainDefault", true);
+				this.SetButtonSprites (button, "ToolbarIconTerrain", "SubBarButtonBase");
+			}
+			// CreateGroupItem (new GeneratedGroupPanel.GroupInfo ("PropsParksParkEquipment", this.GetCategoryOrder (base.name), "Props"), "PROPS_CATEGORY");
+		}
+
+		private struct EditorProps {
+			public string m_category;
+			public string m_tooltip;
+
+			public EditorProps (string category, string tooltip) {
+				this.m_category = category;
+				this.m_tooltip  = tooltip;
+			}
+		}
+
+		private void AddPropsPanel (UITabstrip tabstrip, EditorProps[] props) {
+			foreach (EditorProps prop in props) {
+				UIButton button = this.AddButton (typeof (EditorPropsPanel), tabstrip, prop.m_category, prop.m_tooltip, true);
+				this.SetButtonSprites (button, "SubBar" + prop.m_category, "SubBarButtonBase");
 			}
 		}
 
@@ -63,12 +93,10 @@ namespace Terraforming {
 			return strip;
 		}
 
-		private UIButton AddButton (UITabstrip strip, bool enabled) {
-			Type type = typeof (TerraformingPanel);
-
+		private UIButton AddButton (Type type, UITabstrip strip, string category, string tooltip, bool enabled) {
 			GameObject subbarButtonTemplate = UITemplateManager.GetAsGameObject ("SubbarButtonTemplate");
 			GameObject subbarPanelTemplate = UITemplateManager.GetAsGameObject ("SubbarPanelTemplate");
-			UIButton button = (UIButton)strip.AddTab ("TerrainDefault", subbarButtonTemplate, subbarPanelTemplate, type);
+			UIButton button = (UIButton)strip.AddTab (category, subbarButtonTemplate, subbarPanelTemplate, type);
 			button.isEnabled = enabled;
 
 			GeneratedScrollPanel generatedScrollPanel = (GeneratedScrollPanel)strip.GetComponentInContainer (button, type);
@@ -77,13 +105,16 @@ namespace Terraforming {
 				generatedScrollPanel.m_OptionsBar = ToolsModifierControl.mainToolbar.m_OptionsBar;
 				generatedScrollPanel.m_DefaultInfoTooltipAtlas = ToolsModifierControl.mainToolbar.m_DefaultInfoTooltipAtlas;
 
+				if (generatedScrollPanel is EditorPropsPanel) {
+					((EditorPropsPanel)generatedScrollPanel).m_editorCategory = category;
+				}
+
 				if (enabled) {
 					generatedScrollPanel.RefreshPanel ();
 				}
 			}
 
-			this.SetButtonSprites (button, "ToolbarIconTerrain", "SubBarButtonBase");
-			button.tooltip = "Terraforming";
+			button.tooltip = tooltip;
 			return button;
 		}
 
