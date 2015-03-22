@@ -33,7 +33,7 @@ namespace Terraforming {
 				WaterTool water = Tools.GetWaterTool ();
 				if (water != null && water.enabled) {
 					float newSize = water.m_capacity - realTimeDelta * water.m_capacity;
-					water.m_capacity = Math.Max (0.001f, newSize);
+					water.m_capacity = Math.Max (0.0001f, newSize);
 				}
 			}
 		}

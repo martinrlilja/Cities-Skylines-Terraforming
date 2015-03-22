@@ -56,6 +56,8 @@
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="WaterToolLoad.cs" />
     <Compile Include="EditorPropsPanel.cs" />
+    <Compile Include="TerraformingTool.cs" />
+    <Compile Include="ReflectionUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

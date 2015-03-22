@@ -36,7 +36,6 @@ namespace Terraforming {
 			foreach (PrefabInfo info in Resources.FindObjectsOfTypeAll<PrefabInfo> ()) {
 				if (Array.Exists (this.m_editorCategories, c => c == info.editorCategory)) {
 					list.Add (info);
-					DebugOutputPanel.AddMessage (ColossalFramework.Plugins.PluginManager.MessageType.Message, info.name);
 				}
 			}
 			list.Sort (new Comparison<PrefabInfo> (this.ItemsGenericCategorySort));

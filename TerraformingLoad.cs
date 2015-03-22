@@ -12,7 +12,8 @@ namespace Terraforming {
 		public override void OnLevelLoaded (LoadMode mode) {
 			base.OnLevelLoaded (mode);
 
-			Tools.LoadTools ();
+			ResourceUtils.Dump<CursorInfo> ();
+			Tools.Load ();
 			
 			UITabstrip tabstrip = (UITabstrip)ToolsModifierControl.mainToolbar.component;
 			UITabstrip beautificationTabstrip = this.BeautificationTabstrip (tabstrip);
