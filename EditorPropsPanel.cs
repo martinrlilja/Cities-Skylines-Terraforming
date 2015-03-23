@@ -1,14 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using ColossalFramework;
 using ColossalFramework.DataBinding;
 using ColossalFramework.UI;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Terraforming {
 	public class EditorPropsPanel : GeneratedScrollPanel {
+		private static MethodInfo m_CreateAssetItem = ReflectionUtils.GetInstanceMethod (typeof (GeneratedScrollPanel), "CreateAssetItem");
+
 		public string[] m_editorCategories;
+
+		public void CreateAssetItem (PrefabInfo info) {
+			ReflectionUtils.InvokeInstanceMethod (m_CreateAssetItem, this, info);
+		}
 
 		public override ItemClass.Service service {
 			get {
@@ -43,13 +50,6 @@ namespace Terraforming {
 			foreach (PrefabInfo info in list) {
 				this.CreateAssetItem (info);
 			}
-		}
-
-		private void CreateAssetItem (PrefabInfo info) {
-			string localizedTooltip = info.GetLocalizedTooltip ();
-			int hashCode = TooltipHelper.GetHashCode (localizedTooltip);
-			UIComponent tooltipBox = GeneratedPanel.GetTooltipBox (hashCode);
-			this.SpawnEntry (info.name, localizedTooltip, info.m_Thumbnail, info.m_Atlas, tooltipBox, ToolsModifierControl.IsUnlocked (info.GetUnlockMilestone ())).objectUserData = info;
 		}
 
 		protected int ItemsGenericCategorySort (PrefabInfo a, PrefabInfo b) {
