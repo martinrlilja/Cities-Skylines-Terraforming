@@ -7,11 +7,11 @@ using UnityEngine;
 namespace Terraforming {
 	public class TerraformingMod : IUserMod {
 		public string Name {
-			get { return "Terraforming"; }
+			get { return "WIP More Beautificatio"; }
 		}
 
 		public string Description {
-			get { return "Enables the terrain tools in the game."; }
+			get { return "Enables terraforming, water source placement and park decoration placement in game."; }
 		}
 	}
 }
