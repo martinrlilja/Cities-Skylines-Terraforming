@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Terraforming {
 	public class TerraformingMod : IUserMod {
 		public string Name {
-			get { return "WIP More Beautificatio"; }
+			get { return "WIP More Beautification"; }
 		}
 
 		public string Description {

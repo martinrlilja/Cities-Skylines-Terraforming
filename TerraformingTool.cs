@@ -23,7 +23,7 @@ namespace Terraforming {
 		private static MethodInfo m_ApplyBrush       = ReflectionUtils.GetInstanceMethod (typeof (TerrainTool), "ApplyBrush");
 		private static MethodInfo m_EndStroke        = ReflectionUtils.GetInstanceMethod (typeof (TerrainTool), "EndStroke");
 
-		public int m_costMultiplier = 2000;
+		public int m_costMultiplier = 500;
 
 		private ushort[] m_buffer;
 
