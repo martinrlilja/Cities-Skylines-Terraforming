@@ -1,9 +1,8 @@
 
-More Beautification (Terraforming)
+More Beautification
 ==================================
 
-This is a mod which enables the use of terrain tools, water tools and lets you
-spawn many more prefabs in game.
+This is a mod which lets you spawn many more prefabs in game.
 
 Compiling
 ---------
