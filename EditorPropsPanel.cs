@@ -46,17 +46,21 @@ namespace MoreBeautification
         {
             base.RefreshPanel();
 
-            List<PrefabInfo> list = new List<PrefabInfo>();
-            foreach (PrefabInfo info in Resources.FindObjectsOfTypeAll<PrefabInfo>())
+            List<PropInfo> list = new List<PropInfo>();
+            foreach (PropInfo info in Resources.FindObjectsOfTypeAll<PropInfo>())
             {
+                if (info.m_mesh == null)
+                {
+                    continue;
+                }
                 if (Array.Exists(this.m_editorCategories, c => c == info.editorCategory))
                 {
                     list.Add(info);
                 }
             }
-            list.Sort(new Comparison<PrefabInfo>(this.ItemsGenericCategorySort));
+            list.Sort(new Comparison<PropInfo>(this.ItemsGenericCategorySort));
 
-            foreach (PrefabInfo info in list)
+            foreach (PropInfo info in list)
             {
                 this.CreateAssetItem(info);
             }

@@ -63,6 +63,13 @@ namespace MoreBeautification
                         "PropsResidentialRooftopAccess",
                         "PropsResidentialRandomRooftopAccess",
                     }, "ToolbarIconPropsResidential", "Residential"),
+
+                    new EditorProps ("PropsUnsorted", new string[] {
+                        PrefabInfo.kDefaultCategory,
+                        PrefabInfo.kSameAsGameCategory,
+                        "PropsMarkers"
+                    }, "ToolbarIconHelp", "Unsorted"),
+
                 });
             }
             // CreateGroupItem (new GeneratedGroupPanel.GroupInfo ("PropsParksParkEquipment", this.GetCategoryOrder (base.name), "Props"), "PROPS_CATEGORY");
