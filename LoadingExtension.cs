@@ -96,6 +96,10 @@ namespace MoreBeautification
             foreach (EditorProps prop in props)
             {
                 UIButton button = this.AddButton(typeof(EditorPropsPanel), tabstrip, prop.m_category, prop.m_categories, prop.m_tooltip, true);
+                if (button == null)
+                {
+                    continue;
+                }
                 this.SetButtonSprites(button, prop.m_icon, "SubBarButtonBase");
             }
         }
@@ -157,8 +161,15 @@ namespace MoreBeautification
 
         private UIButton AddButton(Type type, UITabstrip strip, string category, string[] editorCategories, string tooltip, bool enabled)
         {
+            if (GameObject.Find(String.Format("{0}Panel", category)) != null)
+            {
+                return null;
+            }
+            
             GameObject subbarButtonTemplate = UITemplateManager.GetAsGameObject("SubbarButtonTemplate");
             GameObject subbarPanelTemplate = UITemplateManager.GetAsGameObject("SubbarPanelTemplate");
+
+
             UIButton button = (UIButton)strip.AddTab(category, subbarButtonTemplate, subbarPanelTemplate, type);
             button.isEnabled = enabled;
 
