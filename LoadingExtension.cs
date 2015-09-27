@@ -54,7 +54,7 @@ namespace MoreBeautification
                         "PropsCommonAccessories",
                         "PropsCommonGarbage",
                         "PropsCommonCommunications",
-                        "PropsCommonStreets",
+                        "PropsCommonStreets"
                     }, "ToolbarIconPropsCommon", "Common"),
 
                     new EditorProps ("PropsResidential", new string[] {
@@ -63,6 +63,13 @@ namespace MoreBeautification
                         "PropsResidentialRooftopAccess",
                         "PropsResidentialRandomRooftopAccess",
                     }, "ToolbarIconPropsResidential", "Residential"),
+
+                    new EditorProps ("PropsLights", new string[] {
+                        "PropsCommonStreets",
+                        "PropsCommonLights",
+                        PrefabInfo.kDefaultCategory,
+                        PrefabInfo.kSameAsGameCategory,
+                    }, "SubBarPropsCommonLights", "Lights"),
 
                     new EditorProps ("PropsUnsorted", new string[] {
                         PrefabInfo.kDefaultCategory,
@@ -183,6 +190,7 @@ namespace MoreBeautification
                 if (generatedScrollPanel is EditorPropsPanel)
                 {
                     ((EditorPropsPanel)generatedScrollPanel).m_editorCategories = editorCategories;
+                    ((EditorPropsPanel) generatedScrollPanel).m_category = category;
                 }
 
                 if (enabled)

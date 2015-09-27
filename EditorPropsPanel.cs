@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using ColossalFramework;
@@ -14,6 +15,7 @@ namespace MoreBeautification
         private static MethodInfo m_CreateAssetItem = ReflectionUtils.GetInstanceMethod(typeof(GeneratedScrollPanel), "CreateAssetItem");
 
         public string[] m_editorCategories;
+        public string m_category;
 
         public void CreateAssetItem(PrefabInfo info)
         {
@@ -46,18 +48,28 @@ namespace MoreBeautification
         {
             base.RefreshPanel();
 
-            List<PropInfo> list = new List<PropInfo>();
-            foreach (PropInfo info in Resources.FindObjectsOfTypeAll<PropInfo>())
+            var list = Resources.FindObjectsOfTypeAll<PropInfo>().Where(info => info.m_mesh != null).
+                Where(info => Array.Exists(this.m_editorCategories, c =>
             {
-                if (info.m_mesh == null)
+                if (c != "PropsCommonStreets" && c != PrefabInfo.kDefaultCategory && c != PrefabInfo.kSameAsGameCategory)
+                    return c == info.editorCategory;
+                switch (m_category)
                 {
-                    continue;
+                    case "PropsLights":
+                        return info.m_effects != null && info.m_effects.Any(effect => effect.m_effect is LightEffect);
+                    case "PropsCommon":
+                    case "PropsUnsorted":
+                        if (info.m_effects != null)
+                        {
+                            if (info.m_effects.Any(effect => effect.m_effect is LightEffect))
+                            {
+                                return false;
+                            }
+                        }
+                        break;
                 }
-                if (Array.Exists(this.m_editorCategories, c => c == info.editorCategory))
-                {
-                    list.Add(info);
-                }
-            }
+                return c == info.editorCategory;
+            })).ToList();
             list.Sort(new Comparison<PropInfo>(this.ItemsGenericCategorySort));
 
             foreach (PropInfo info in list)
