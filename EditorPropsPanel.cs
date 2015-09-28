@@ -15,7 +15,6 @@ namespace MoreBeautification
         private static MethodInfo m_CreateAssetItem = ReflectionUtils.GetInstanceMethod(typeof(GeneratedScrollPanel), "CreateAssetItem");
 
         public string[] m_editorCategories;
-        public string m_category;
 
         public void CreateAssetItem(PrefabInfo info)
         {
@@ -53,7 +52,7 @@ namespace MoreBeautification
             {
                 if (c != "PropsCommonStreets" && c != PrefabInfo.kDefaultCategory && c != PrefabInfo.kSameAsGameCategory)
                     return c == info.editorCategory;
-                switch (m_category)
+                switch (category)
                 {
                     case "PropsLights":
                         return info.m_effects != null && info.m_effects.Any(effect => effect.m_effect is LightEffect);

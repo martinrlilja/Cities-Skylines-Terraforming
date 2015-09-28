@@ -190,7 +190,7 @@ namespace MoreBeautification
                 if (generatedScrollPanel is EditorPropsPanel)
                 {
                     ((EditorPropsPanel)generatedScrollPanel).m_editorCategories = editorCategories;
-                    ((EditorPropsPanel) generatedScrollPanel).m_category = category;
+                    ((EditorPropsPanel) generatedScrollPanel).category = category;
                 }
 
                 if (enabled)
